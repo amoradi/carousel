@@ -50,6 +50,33 @@ $(document).ready(function() {
 										
 		*/
 		
+	// position container relative
+	$(this).css({
+      		"position": "relative",
+      		"overflow": "hidden"
+    	});
+	
+	// position direct children absolute, upper left corner
+	$(this).children().css({
+		"position": "absolute", 
+		"top": "0", 
+		"left": "0"
+	});
+	
+	// direct children array
+	var dirChildren = $(this).children();
+	// initial z-index
+	var z = 999;
+	// for each direct child assign a z-index (decrement)
+	$(dirChildren).each(function() {
+		var z -= 1;
+		$(this).css({
+			"z-index" : "z"
+		});
+	});
+
+// End New Code
+
 		var slider = function() {
 				$('.z30').fadeOut("slow", function() {
 					var z20 = $('.z20');
