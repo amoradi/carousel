@@ -69,7 +69,7 @@ $(document).ready(function() {
 	var z = 999;
 	// for each direct child assign a z-index (decrement)
 	$(dirChildren).each(function() {
-		var z -= 1;
+		var z =- 1;
 		$(this).css({
 			"z-index" : "z"
 		});
