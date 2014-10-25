@@ -1,6 +1,3 @@
-carousel
-========
-
 #Content Carousel
 
 ###Installation
