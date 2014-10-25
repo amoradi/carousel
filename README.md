@@ -19,7 +19,6 @@ _Simple Carousel Rotator_
 ```
 ### Initialize
 + Call carousel(interval, transitionSpeed, pauseOnHover, navigation, animation) on #carousel
-
 + interval  
 + transitionSpeed
 + pauseOnHover
