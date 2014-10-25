@@ -10,8 +10,8 @@ $.fn.carousel = function(interval, transitionSpeed, pauseOnHover, navigation, an
 		
 	// set default parameters
 	interval 			= typeof interval !== 'undefined' ? interval : 4500;
-   	transitionSpeed 	= typeof transitionSpeed !== 'undefined' ? transitionSpeed : 'slow';
-	pauseOnHover 		= typeof pauseOnHover !== 'undefined' ? pauseOnHover : true;
+   	transitionSpeed 		= typeof transitionSpeed !== 'undefined' ? transitionSpeed : 'slow';
+	pauseOnHover 			= typeof pauseOnHover !== 'undefined' ? pauseOnHover : true;
 	navigation 			= typeof navigation !== 'undefined' ? navigation : true;
 	animation			= typeof animation !== 'undefined' ? animation : 'fade';
 	
@@ -23,13 +23,13 @@ $.fn.carousel = function(interval, transitionSpeed, pauseOnHover, navigation, an
 	
 	// container width
 	var containerWidth 	= $('#carousel').width();
-	var containerHeight = $('#carousel').height();		
+	var containerHeight 	= $('#carousel').height();		
 		
 	// position container relative
 	$(this).css({
-			"position": "relative",
-			"overflow": "hidden"
-		});
+		"position": "relative",
+		"overflow": "hidden"
+	});
 		
 	// position direct children absolute, upper left corner
 	$(dirChildren).css({
@@ -71,9 +71,9 @@ $.fn.carousel = function(interval, transitionSpeed, pauseOnHover, navigation, an
 
 		// move slide to back and fade in after animation and re-position
 		var moveToBck = function() {
-				$(dirChildren[i]).css({"z-index" : "-=" + numSlides,"left":0, "top": 0});
-				$(dirChildren[i]).fadeIn('fast');
-				i++;
+			$(dirChildren[i]).css({"z-index" : "-=" + numSlides,"left":0, "top": 0});
+			$(dirChildren[i]).fadeIn('fast');
+			i++;
 		}
 
 		// animations
@@ -113,11 +113,11 @@ $.fn.carousel = function(interval, transitionSpeed, pauseOnHover, navigation, an
 		
 	/* For Pause on Hover =============== */	
 	// save an object so that I can start and stop this as we go
-    var intervalObj = setInterval(slider, interval);
+    	var intervalObj = setInterval(slider, interval);
 	// when the user hovers in, clear the interval; if they hover out,
-    // restart it again
-    if (pauseOnHover) {
-    	$('#carousel').hover(function() {
+    	// restart it again
+    	if (pauseOnHover) {
+    		$('#carousel').hover(function() {
 			clearInterval(intervalObj);
 	   		}, function() {
 	        intervalObj = setInterval(slider, interval);
