@@ -15,6 +15,10 @@ _Simple Carousel Rotator_
 		<div>Slide 2</div>
 		<div>Slide 3</div>
 		<img src="slide4.jpg" />
+		<aside>Slide 5</aside>
+		<div>
+			<div>Slide 6</div>
+		</div>
 	<div>
 ```
 ### Initialize
