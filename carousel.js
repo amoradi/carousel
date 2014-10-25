@@ -1,114 +1,127 @@
 /*
-		Create a responsive, rotating carsousel with mulitple transitions effects and navigations links
-		
-		Find class rotator
-		Find direct children
-		
-		each direct child becomes a Banner Object
-			Banner Class
-			
-			transition: string
-			
-		
-*/
+	Aaron Moradi
+	Content Carousel
+	
+	aaronmoradi.com
+ */
 
-$(document).ready(function() {	
-});
-
-(function( $ ) {
-		  
-	$.fn.carousel = function(options ) {
-		/*
-			Make this position relative, set width and height, overflow:hidden;
-			Make all direct children absolute positioned left 0, top 0
-						
-			Find direct children of this
-			put them into an array
-			
-			For each item assign 1 less z-index value starting at 999
-			
-			
-			Parameters:
-						duration			- input in setInterval (int)
-						transition speed 	- 'fast' or 'slow'
-						hover on pause 		- defaults to True (Boolean)
-						navigation 			- deafults to True (Boolean)
-						animation 			- fade, slide right, left, top, down (done in jQuery .aniamte)
-						
-			
-			Define
-			Animations:
-						fade				- fadeOut(transition speed)
-						slide effects		- .animate({...
-							slide right		- right: width (set width of container)
-							slide left		- left: width "
-							slide down		- bottom: height (set height of container)
-							slide up 		- top: height "
-			
-			
-						
-										
-		*/
+$.fn.carousel = function(interval, transitionSpeed, pauseOnHover, navigation, animation) {
+		
+	// set default parameters
+	interval 			= typeof interval !== 'undefined' ? interval : 4500;
+   	transitionSpeed 	= typeof transitionSpeed !== 'undefined' ? transitionSpeed : 'slow';
+	pauseOnHover 		= typeof pauseOnHover !== 'undefined' ? pauseOnHover : true;
+	navigation 			= typeof navigation !== 'undefined' ? navigation : true;
+	animation			= typeof animation !== 'undefined' ? animation : 'fade';
+	
+	// direct children array (content slides)
+	var dirChildren 	= $(this).children();
+	
+	// initial z-index of 1st content slide
+	var z = 999;
+	
+	// container width
+	var containerWidth 	= $('#carousel').width();
+	var containerHeight = $('#carousel').height();		
 		
 	// position container relative
 	$(this).css({
-      		"position": "relative",
-      		"overflow": "hidden"
-    	});
-	
+			"position": "relative",
+			"overflow": "hidden"
+		});
+		
 	// position direct children absolute, upper left corner
-	$(this).children().css({
+	$(dirChildren).css({
 		"position": "absolute", 
 		"top": "0", 
 		"left": "0"
 	});
-	
-	// direct children array
-	var dirChildren = $(this).children();
-	// initial z-index
-	var z = 999;
+		
 	// for each direct child assign a z-index (decrement)
 	$(dirChildren).each(function() {
-		var z =- 1;
 		$(this).css({
-			"z-index" : "z"
+			"z-index" : z
 		});
+		z -= 1;
 	});
+		
+	/* slides are positioned */
+	/* ======================================================================= */
+	/* ======================================================================= */
+	/* ======================================================================= */
+	/* ======================================================================= */
+	/* create animations below */	
 
-// End New Code
+	var i = 0;
 
-		var slider = function() {
-				$('.z30').fadeOut("slow", function() {
-					var z20 = $('.z20');
-					var z10 = $('.z10');
-					
-					// Push top slide to bottom of stack			
-					// remove class z30 (layer becomes default z-index of 5)
-					$(this).removeClass('z30');
-								
-					// update lower layers by adding and removing classes, i.e. class="z20" becomes class="z30"
-					$(z20).addClass('z30');
-					$(z20).removeClass('z20');
-								
-					$(z10).addClass('z20');
-					$(z10).removeClass('z10');
-								
-					// fade bottom most layer in and add class z10
-					$(this).fadeIn("slow", function() {
-						$(this).addClass('z10');
-					});	
-				}); // end fadeOut callback		
-			} // end slider()
-				
-			// save an object so that I can start and stop this as we go
-			var interval = setInterval(slider, 5000);
+	var slider = function() {
+		
+		// # of content slides
+		var numSlides = $(dirChildren).length;
 			
-			// when the user hovers in, clear the interval; if they hover out,
-			// restart it again
-			$('.home-banner').hover(function() {
-				clearInterval(interval);
-			}, function() {
-				interval = setInterval(slider, 5000);
-			});
-	}
-}( jQuery ));
+		//  repeat loop if i is over dirChildren length
+		if (i == numSlides) {
+			i = 0;
+		}
+		// after one iteration, repeat iteration (add to slide z-indexes)
+		if ( $(dirChildren[0]).css("z-index") == (999 - numSlides) ) {
+			$(dirChildren).css("z-index", "+=" + numSlides );
+		}
+
+		// move slide to back and fade in after animation and re-position
+		var moveToBck = function() {
+				$(dirChildren[i]).css({"z-index" : "-=" + numSlides,"left":0, "top": 0});
+				$(dirChildren[i]).fadeIn('fast');
+				i++;
+		}
+
+		// animations
+		switch (animation) {
+
+			case 'fade':
+			$(dirChildren[i]).fadeOut(transitionSpeed, moveToBck);		
+			break;
+
+			case 'slideRight':
+			$(dirChildren[i]).animate({
+				left: containerWidth			    
+		  	}, transitionSpeed, moveToBck);	
+			break;
+
+			case 'slideLeft':
+			$(dirChildren[i]).animate({
+				left: "-" + containerWidth			    
+		  	}, transitionSpeed, moveToBck);	
+			break;
+
+			case 'slideTop':
+			$(dirChildren[i]).animate({
+				top: "-" + containerHeight		    
+		  	}, transitionSpeed, moveToBck);	
+			break;
+
+			case 'slideBottom':
+			$(dirChildren[i]).animate({
+				top: containerHeight			    
+		  	}, transitionSpeed, moveToBck);	
+			break;
+
+		} // end animations
+
+	} // end slider()
+		
+	/* For Pause on Hover =============== */	
+	// save an object so that I can start and stop this as we go
+    var intervalObj = setInterval(slider, interval);
+	// when the user hovers in, clear the interval; if they hover out,
+    // restart it again
+    if (pauseOnHover) {
+    	$('#carousel').hover(function() {
+			clearInterval(intervalObj);
+	   		}, function() {
+	        intervalObj = setInterval(slider, interval);
+	   	});
+	}	
+	/* End Pause on Hover =============== */
+						
+} // end carousel
