@@ -16,8 +16,20 @@ _Simple Carousel Rotator_
 		<div>Slide 3</div>
 		<img src="slide4.jpg" />
 	<div>
-'''
-// init carousel	
-$(document).ready(function() {
-	$('#carousel').carousel(3000,1000, true, true, 'slideLeft');
-});
+```
+### Initialize
++ Call carousel(interval, transitionSpeed, pauseOnHover, navigation, animation) on #carousel
+
++ interval  
++ transitionSpeed
++ pauseOnHover
++ navigation
++ animation
+```
+<script>
+	$(document).ready(function() {
+		$('#carousel').carousel(3000,1000, true, true, 'slideLeft');
+	});
+</script>
+```
+
