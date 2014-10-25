@@ -3,6 +3,7 @@
 	Content Carousel
 	
 	aaronmoradi.com
+	
  */
 
 $.fn.carousel = function(interval, transitionSpeed, pauseOnHover, navigation, animation) {
