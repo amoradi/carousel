@@ -5,6 +5,7 @@
 	aaronmoradi.com
 	
  */
+ 
 (function( $ )
 	$.fn.carousel = function(interval, transitionSpeed, pauseOnHover, navigation, animation) {
 			
